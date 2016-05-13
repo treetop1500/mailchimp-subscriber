@@ -40,7 +40,4 @@ if ($form->isValid()) {
   $response->headers->set('Content-Type', 'application/json');
   return $response;
 }
-
-
-
-
+```
