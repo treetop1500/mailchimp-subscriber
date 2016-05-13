@@ -21,7 +21,7 @@ use Mailchimp\Mailchimp;
 
 /**
  * Class SimpleSubscribeController
- * @package Hoyt\UtilBundle\Controller
+ * @package UtilBundle\Controller
  */
 class MailchimpSubscriber
 {
