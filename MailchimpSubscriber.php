@@ -14,7 +14,7 @@
  * ======================================================
  */
 
-namespace Hoyt\UtilBundle;
+namespace UtilBundle;
 
 use Mailchimp\Mailchimp;
 
