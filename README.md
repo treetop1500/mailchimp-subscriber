@@ -55,4 +55,4 @@ if ($form->isValid()) {
   return $response;
 }
 ```
-(replace $interestId1 and $interestId2 with your actual interest group IDs, available from the Google Map API V3 Playground)
+(replace interestId1 and interestId2 with your actual interest group IDs, available from the Google Map API V3 Playground)
