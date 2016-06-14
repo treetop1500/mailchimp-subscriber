@@ -41,3 +41,18 @@ if ($form->isValid()) {
   return $response;
 }
 ```
+#### To subscribe to a list with interest groups
+```#controller
+if ($form->isValid()) {
+  $mc = $this->get('mailchimp.subscriber');
+  $interests = array(
+    "interestId1" => true,
+    "interestId2" => true
+  )
+  $subscribe_result  = $mc->subscribe($subscriber->getEmail(),$interests);
+  $response = new Response(json_encode($subscribe_result));
+  $response->headers->set('Content-Type', 'application/json');
+  return $response;
+}
+```
+(replace $interestId1 and $interestId2 with your actual interest group IDs, available from the Google Map API V3 Playground)
