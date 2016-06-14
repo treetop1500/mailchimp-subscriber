@@ -94,14 +94,14 @@ class MailchimpSubscriber
 
     /**
      * @param $email
-     * @return array
+     * @param null $groups array
+     * @return array Loops through possible scenarios by first examining the status of the email in the list (if it's there)
      * Loops through possible scenarios by first examining the status of the email in the list (if it's there)
      * then handling the subscription items.
      * Ultimately returns an array contains a status (string) and response (string)
      */
-    public function subscribe($email)
+    public function subscribe($email,$groups = null)
     {
-
         $mc = new MailChimp($this->api_key);
 
         try {
@@ -114,11 +114,18 @@ class MailchimpSubscriber
 
                 return $this->alreadySubscribed($email);
             } else {
-                // patch the user...
-                $result = $mc->patch('lists/'.$this->list_id.'/members/' . md5($email), [
+
+                $data = array(
                   'status' => 'pending',
                   'status_if_new' => 'pending'
-                ]);
+                );
+
+                if ($groups) {
+                    $data['interests'] = $groups;
+                }
+
+                // patch the user...
+                $result = $mc->patch('lists/'.$this->list_id.'/members/' . md5($email), $data);
                 // if all good...
                 if ($result) {
 
@@ -136,12 +143,19 @@ class MailchimpSubscriber
 
             // if not in the list already...
             if ($status == 404) {
-                // subscribe the user...
-                $result = $mc->post('lists/'.$this->list_id.'/members', [
+
+                $data = array(
                   'email_address' => $email,
                   'status' => 'pending',
                   'status_if_new' => 'pending'
-                ]);
+                );
+
+                if ($groups) {
+                    $data['interests'] = $groups;
+                }
+
+                // subscribe the user...
+                $result = $mc->post('lists/'.$this->list_id.'/members', $data);
                 // if all good...
                 if ($result) {
                     return $this->isNowSubscribed($email);
